@@ -1,0 +1,116 @@
+﻿@model EntityLayer.Concrete.Customer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BazaarECommerce</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="fontawesome-all.css" rel="stylesheet">
+    <!-- <link href="zstyle.css" rel="stylesheet"> -->
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    @*<link href="~/css/loginpage.css" rel="stylesheet" />*@
+
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <div class="d-flex justify-content-center" style="margin-top: 45px">
+        <div class="modal-content col-md-5">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Register</h5>
+
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Index", "Register", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @placeholder = "Name", @required = "", @type = "text" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.TextBoxFor(x => x.Surname, new { @class = "form-control", @placeholder = "Surname", @required = "", @type = "text" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "email", @required = "", @type = "email" })
+                        @*<input type="text" class="form-control" placeholder="Username" name="Name" required="">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password", @placeholder = "password", @required = "", @id = "password" })
+                        @*<input type="password" class="form-control" placeholder="Password" name="Password" required="">*@
+                    </div>
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password", @placeholder = "password again", @required = "", @id = "confirm_password" })
+                        @*<input type="password" class="form-control" placeholder="Password" name="Password" required="">*@
+                        <span id='message'></span>
+                    </div>
+
+                    <div class="right-w3l">
+                        <input id="submitregister" type="submit" class="form-control" value="Register" style="background: #fdb03d; color:white">
+                    </div>
+
+                    <p class="text-center dont-do mt-3">
+                        Don you have an account?
+                        <a href="/Login/Index/">
+                            Log in Now
+                        </a>
+                    </p>
+
+                    <p class="text-center dont-do mt-3">(Or)</p>
+                    <div class="social text-center mt-2">
+                        <ul class="list-unstyled">
+                            <li class="d-inline">
+                                <a class="icon fb" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline mx-1">
+                                <a class="icon tw" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </li>
+                            <li class="d-inline">
+                                <a class="icon gp" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#google-plus">
+                                    <i class="fab fa-google-plus-g"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+
+
+</html>
+<script>
+    $('#confirm_password').on('keyup', function () {
+        if ($('#password').val() == $('#confirm_password').val()) {
+            $('#message').html('Matching').css('color', 'green');
+            $('#submitregister').html('').prop('disabled', false).css('background', '#fdb03d');
+        } else {
+            $('#message').html('Not Matching').css('color', 'red');
+            $('#submitregister').html('').prop('disabled', true).css({ 'background': "gray" });
+        }
+    });
+</script>
+
+
+
+
+

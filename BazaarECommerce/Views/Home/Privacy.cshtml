@@ -1,0 +1,11 @@
+﻿@model List<EntityLayer.Concrete.Computer>
+@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+@foreach (var item in Model)
+{
+    <p>@item.Product.Images[0]</p>
+
+}

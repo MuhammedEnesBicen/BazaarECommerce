@@ -1,0 +1,287 @@
+﻿<style >
+.right-w3l input[type="submit"]:hover {
+    background: var(--secondary-color);
+    color: #fff;
+}
+
+input.form-control {
+}
+
+.right-w3l input[type="submit"] {
+    cursor: pointer;
+    padding: 12 px 0;
+    background: #fdb03d;
+    color: #fff;
+    margin: 2 vw 0 1.5 vw;
+    -webkit-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    transition: 0.5s all;
+}
+
+button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
+    cursor: pointer;
+}
+
+input[type="button"], input[type="submit"] {
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+input.form-control {
+    background: var(--bg-grey);
+    border: none;
+    height: auto;
+    padding: 12 px;
+    font-size: 15px;
+    border-radius: 4 px;
+}
+
+input[type="button"], input[type="submit"] {
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+}
+
+.form-control {
+    border-radius: 0;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    height: calc(1.5 em + 0.75 rem + 2 px );
+    padding: 0.375 rem 0.75 rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1 px solid #ced4da;
+    border-radius: 0.25 rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+button, [type="button"], [type="reset"], [type="submit"] {
+    -webkit-appearance: button;
+}
+
+button, input {
+    overflow: visible;
+}
+
+input, button, select, optgroup, textarea {
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+user agent stylesheet
+input[type="submit" i] {
+    appearance: auto;
+    user-select: none;
+    white-space: pre;
+    align-items: flex-start;
+    text-align: center;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: -internal-light-dark(rgb(239, 239, 239), rgb(59, 59, 59));
+    color: -internal-light-dark(black, white);
+    padding: 1px 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+}
+
+user agent stylesheet
+input {
+    -webkit-writing-mode: horizontal-tb !important;
+    font-style:;
+    font-variant-ligatures:;
+    font-variant-caps:;
+    font-variant-numeric:;
+    font-variant-east-asian:;
+    font-weight:;
+    font-stretch:;
+    font-size:;
+    font-family:;
+    text-rendering: auto;
+    color: -internal-light-dark(black, white);
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    background-color: -internal-light-dark(rgb(255, 255, 255), rgb(59, 59, 59));
+    margin: 0em;
+    padding: 1px 2px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+}
+
+.modal-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1 px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3 rem;
+    outline: 0;
+}
+
+.modal-dialog {
+    position: relative;
+    width: auto;
+    margin: 0.5 rem;
+    pointer-events: none;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg-color);
+    color: var(--font-color);
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+:root {
+    --theme-color: #e40000;
+    --primary-color: #fdb03d;
+    --primary-light: #fcf1e7;
+    --primary-dark: #ffc945;
+    --secondary-color: #292560;
+    --font-color: #707070;
+    --bg-color: #fff;
+    --heading-color: #060606;
+    --footer-color: #060e1f;
+    --footer-cpy-color: #040a17;
+    --border-radius: 30px;
+    --border-radius-full: 15px;
+    --border-color: transparent;
+    --border-color-light: #eee;
+    --iframe-filter: grayscale(0%);
+    --bg-grey: #f4f4f4;
+    --bg-light: #fafafa;
+    --bg-dark-color: #fff;
+    --quote-text-color: #1d2c4c;
+    --icon-gra-color: linear-gradient(75deg, #1c2e7b 10%, #e60264);
+    --shadow-color: rgb(0 0 0 / 3%);
+    --box-shadow: rgb(0 0 0 / 41%);
+    --iframe-filter: grayscale(0%);
+    --banner-1: url(../images/banner1.png) no-repeat center;
+    --banner-2: url(../images/banner2.png) no-repeat center;
+    --banner-3: url(../images/banner3.png) no-repeat center;
+    --banner-4: url(../images/banner4.png) no-repeat center;
+}
+
+:root {
+    --blue: #007bff;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #6c757d;
+    --gray-dark: #343a40;
+    --primary: #ff4c4c;
+    --secondary: #e71d36;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+html {
+    font-family: sans-serif;
+    line-height: 1.15;
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+    *, *::before, *::after {
+        box-sizing: border-box;
+    }
+
+.social .fb {
+    background: #6788ce;
+}
+
+.social .tw {
+    background: #00ACEE;
+}
+
+.social .gp {
+    background: #DD4B39;
+}
+
+/* .social a {
+            position: relative;
+            display: inline-block;
+            width: 34 px;
+            height: 34 px;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            -o-border-radius: 50%;
+            -ms-border-radius: 50%;
+            text-align: center;
+        }*/
+</style >

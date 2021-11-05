@@ -1,0 +1,103 @@
+﻿@model EntityLayer.Concrete.Customer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - BazaarECommerce</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+</head>
+
+<body>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <div class="d-flex justify-content-center" style="margin-top: 45px">
+        <div class="modal-content col-md-5">
+            <div class="modal-header">
+                <h5 class="modal-title text-center">Log In</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                {
+                    <form action="#" method="post">
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "email", @required = "", @type = "email" })
+                            @*<input type="text" class="form-control" placeholder="Username" name="Name" required="">*@
+                        </div>
+                        <div class="form-group">
+                            @Html.TextBoxFor(x => x.Password, new { @class = "form-control", @type = "password", @placeholder = "password", @required = "" })
+                            @*<input type="password" class="form-control" placeholder="Password" name="Password" required="">*@
+                        </div>
+                        <p style="color:red"> @ViewBag.message </p>
+                        <div class="right-w3l">
+                            <input id="submitlogin" type="submit" class="form-control" value="Log in" style="background: #fdb03d; color:white">
+                        </div>
+                        <div class="sub-w3l">
+                            <div class="custom-control custom-checkbox mr-sm-2">
+                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing">
+                                <label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
+                            </div>
+                        </div>
+                        <p class="text-center dont-do mt-3">
+                            Don't have an account?
+                            <a href="/Register/Index/">
+                                Register Now
+                            </a>
+                        </p>
+                        <p class="text-center dont-do mt-3">(Or)</p>
+                        <div class="social text-center mt-2">
+                            <ul class="list-unstyled">
+                                <li class="d-inline">
+                                    <a class="icon fb" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#facebook">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li class="d-inline mx-1">
+                                    <a class="icon tw" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#twitter">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li class="d-inline">
+                                    <a class="icon gp" href="https://demo.w3layouts.com/demos_new/template_demo/11-06-2021/electronics-mart-liberty-demo_Free/1081434887/web/index.html?_ga=2.6322482.1235133180.1635441790-1456571868.1635441790#google-plus">
+                                        <i class="fab fa-google-plus-g"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                }
+            </div>
+        </div>
+    </div>
+
+    
+
+</body>
+
+
+</html>
+<script>
+    $('#submitlogin').click(function () {
+        swal(@ViewBag.message);
+        if (@ViewBag.message == "n") swal("it is null");
+        if (@ViewBag.message != "true") {
+
+            swal(@ViewBag.message);
+        }
+
+        
+    });
+</script>
+
+
