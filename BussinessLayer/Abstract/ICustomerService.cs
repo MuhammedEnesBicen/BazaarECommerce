@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BussinessLayer.Abstract
 {
-    public interface ICustomerService
+    public interface ICustomerService 
     {
         bool CustomerAdd(Customer customer);
         bool CustomerDelete(Customer customer);

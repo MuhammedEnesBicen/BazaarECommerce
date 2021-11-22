@@ -18,7 +18,11 @@ namespace DataAccessLayer.EntityFramework
         {
             using (var c = new Context())
             {
-                return c.Computers.Include(p => p.Product).ToList();
+                return c.Computers.Include(p => p.Product)
+                    .Include(c => c.Product.Images)
+                    .Include(c => c.Product.Category)
+                    .Include(c => c.Product.Seller)
+                    .Include(c => c.Product.Brand).ToList();
             }
         }
     }

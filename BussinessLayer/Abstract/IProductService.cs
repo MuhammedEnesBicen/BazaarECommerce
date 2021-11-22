@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BussinessLayer.Abstract
 {
-    public interface IProductService
+    public interface IProductService 
     {
         bool ProductAdd(Product product);
         bool ProductUpdate(Product product);

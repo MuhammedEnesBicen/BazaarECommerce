@@ -1,9 +1,10 @@
-﻿@model List<EntityLayer.Concrete.Computer>
+﻿@model List<EntityLayer.Concrete.Product>
 @{
-    ViewData["Title"] = "Products";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
-<h1>@ViewData["Title"]</h1>
+
+
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 
 <style>
@@ -11,18 +12,15 @@
         height: 10rem;
     }
 
-    .price{
-        margin-bottom:0px;
-
+    .price {
+        margin-bottom: 0px;
     }
-
-
 </style>
 
-<div class="container-fluid">
+<div class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-3">
-            @Html.Partial("_productFilterPart",@Model)
+            @Html.Partial("_productFilterPart", @Model)
         </div>
         <div class="col-md-9">
 
@@ -32,15 +30,15 @@
                     <div class="col-md-3">
                         <div class="card" style="margin-bottom:2rem;">
                             <div class="text-center rounded " style="height:15rem; background-color:beige; ">
-                                <img class="img-fluid" style="background-color:" src="@item.Product.Images[0].ImagePath" alt="Card image cap">
+                                <img class="img-fluid" style="background-color:" src="@item.Images[0].ImagePath" alt="Card image cap">
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title">@item.Product.ProductName</h5>
-                                <p class="card-text price">@item.Product.Price</p>
+                                <h5 class="card-title">@item.ProductName</h5>
+                                <p class="card-text price">@item.Price</p>
                                 <p style="color:gray; margin-top:0px;">
                                     <small>
-                                        <del>@(item.Product.Price+item.Product.Discount)</del>
-                                        <b style="color:red">%@((int)((double)item.Product.Discount/(item.Product.Price + item.Product.Discount) * 100))</b>
+                                        <del>@(item.Price+item.Discount)</del>
+                                        <b style="color:red">%@((int)((double)item.Discount/(item.Price + item.Discount) * 100))</b>
                                     </small>
 
                                 </p>
@@ -55,3 +53,4 @@
         </div>
     </div>
 </div>
+

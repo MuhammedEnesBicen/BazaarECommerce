@@ -20,7 +20,8 @@ namespace BussinessLayer.Concrete
 
         public List<Product> GetByCategory(int categoryId)
         {
-            return _productDal.GetAll(p => p.CategoryId == categoryId);
+            //return _productDal.GetAll(p => p.CategoryId == categoryId);
+            return _productDal.GetListWithProduct(categoryId);
         }
 
         public Product GetById(int id)

@@ -32,30 +32,36 @@ namespace ConsoleWeb
         {
             ComputerManager cm = new ComputerManager(new EfComputerRepository());
             ProductManager pm = new ProductManager(new EfProductRepository());
-            pm.ProductAdd(new Product { 
-            ProductName="MSI pc",
-            BrandId=1,
-            CategoryId=1,
-            Description="msi notebook",
-            Discount=12,
-            Installment=6,
-            Price=12000,
-            SellerId=1,
-            StarRate=4.8 
-            });
-            cm.AddComputer(new Computer
+            for (int i = 0; i < 5; i++)
             {
-                ProductId = 2,
-                ColorId = 1,
-                DisplayCard = "2gb",
-                Memory = 126,
-                MemoryType = "ssd",
-                OperatingSystem = "MAC",
-                Processor = "i7",
-                Ram = 8,
-                ScreenSize = "17.1",
-                Webcam = true
-            });
+
+
+                pm.ProductAdd(new Product
+                {
+                    ProductName = "MSI pc",
+                    BrandId = 1,
+                    CategoryId = 1,
+                    Description = "msi notebook",
+                    Discount = 12,
+                    Installment = 6,
+                    Price = 12000,
+                    SellerId = 1,
+                    StarRate = 4.8
+                });
+                cm.AddComputer(new Computer
+                {
+                    ProductId = 2,
+                    ColorId = 1,
+                    DisplayCard = "2gb",
+                    Memory = 126,
+                    MemoryType = "ssd",
+                    OperatingSystem = "MAC",
+                    Processor = "i7",
+                    Ram = 8,
+                    ScreenSize = "17.1",
+                    Webcam = true
+                });
+            }
             //var a =cm.GetListWithProduct();
             //Console.WriteLine(a[0].Product.Description);
 

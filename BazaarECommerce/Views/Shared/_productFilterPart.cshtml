@@ -1,0 +1,102 @@
+﻿@model List<EntityLayer.Concrete.Product>
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<style>
+    .hs {
+        padding-left: 0px;
+        margin-left: 0px;
+    }
+
+    .textArea:hover{
+        border:2px solid green;
+    }
+</style>
+
+@{
+    List<EntityLayer.Concrete.Product> temp = Model;
+
+    Dictionary<int, string> tempBrands = new Dictionary<int, string>();
+
+    foreach (var item in temp)
+    {
+        //Dictionary<int, string> tempDic = new Dictionary<int, string>(new { item.BrandId, "" }) ;
+        if (!tempBrands.ContainsKey(item.BrandId))
+        {
+            tempBrands.Add(item.BrandId, item.Brand.BrandName.ToString());
+        }
+
+    }
+
+    var brands = tempBrands.ToList();
+    void filter()
+    {
+        temp = Model.FindAll(x => x.StarRate >= 4.9);
+    }
+    @functions{
+
+       
+    }
+}
+
+
+<link href="~/lib/font-awesome/css/fontawesome.css" rel="stylesheet" />
+<link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+<div class="container">
+
+    <input class="input-group textArea" type="text" name="name" value="" placeholder="Search by word..." />
+    <div class="dropdown-divider"></div>
+
+    <h5>Brands</h5>
+    @foreach (var item in brands)
+    {
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id=@item.Key.ToString() +"flexCheckDefault">
+            <label class="form-check-label p-0" for=@item.Key.ToString() +"flexCheckDefault">
+                @item.Value
+            </label>
+        </div>
+    }
+
+    <div class="dropdown-divider"></div>
+    <h6 class="hs">Price Range</h6>
+    <div class="row col-12">
+        <input class="form-control col-5 " type="text" placeholder="Min" aria-label="default input example">
+        <input class="form-control col-5 " type="text" placeholder="Max" aria-label="default input example">
+        <button class="form-control col-2 moria-Button-jKYKyx TZeUi skl69nnqgd5" kind="primary" disabled=""><svg width="2em" height="2em" viewBox="0 0 16 16"><g fill="none" fill-rule="evenodd"><path fill="#ffffff" d="M14.451 4.201L7.82 12.954c-.158.204-.394.338-.655.371-.26.034-.524-.036-.73-.194L1.696 9.45c-.418-.325-.486-.919-.151-1.325.334-.407.944-.472 1.362-.147l3.95 3.073 6.033-7.964c.198-.288.543-.448.898-.415.356.033.663.253.802.573.138.32.085.687-.14.957z"></path></g></svg></button>
+
+    </div>
+
+
+    <div class="dropdown-divider"></div>
+    @* Star rate division *@
+    <h6 class="hs">Star Rate</h6>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="4plusstar">
+        <label class="form-check-label p-0" for="4plusstar">
+            <i class="fas fa-star" style="color:#fdb03d"></i>  4 - 5 point
+        </label>
+    </div>
+    <div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="3plusstar">
+        <label class="form-check-label p-0" for="3plusstar">
+            <i class="fas fa-star" style="color: #fdb03d " href="filter"></i>  3 - 3.9 point
+        </label>
+    </div><div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="2plusstar">
+        <label class="form-check-label p-0" for="2plusstar">
+            <i class="fas fa-star" style="color: #fdb03d"></i>  2 - 2.9 point
+        </label>
+    </div><div class="form-check">
+        <input class="form-check-input" type="checkbox" value="" id="0plusstar">
+        <label class="form-check-label p-0" for="0plusstar">
+            <i class="fas fa-star" style="color: #fdb03d"></i>  0 - 1.9 point
+        </label>
+    </div>
+
+
+
+
+</div>
