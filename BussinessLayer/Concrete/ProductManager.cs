@@ -26,12 +26,16 @@ namespace BussinessLayer.Concrete
 
         public Product GetById(int id)
         {
-            return _productDal.Get(p => p.ProductId == id);
+            //return _productDal.Get(p => p.ProductId == id);
+            return _productDal.GetProductWithJoin(id);
         }
 
-        public List<Product> GetBySeller(int sellerId)
+
+
+        // this logis need to improve
+        public List<Product> GetTopRatedProducts()
         {
-            return _productDal.GetAll(p => p.SellerId == sellerId);
+            return _productDal.GetTopRatedProducts();
         }
 
         public bool ProductAdd(Product product)

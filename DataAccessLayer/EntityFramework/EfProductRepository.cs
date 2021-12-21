@@ -43,7 +43,30 @@ namespace DataAccessLayer.EntityFramework
                 //return result.ToList();
 
 
-                return context.Products.Where(p=> p.CategoryId==categoryId).Include(i => i.Images).Include(s=> s.Seller).Include(b=>b.Brand).Include(ca =>ca.Category)
+                return context.Products.Where(p=> p.CategoryId==categoryId).Include(i => i.Images).Include(b=>b.Brand).Include(ca =>ca.Category)
+                    .ToList();
+            }
+        }
+
+        public Product GetProductWithJoin(int productId)
+        {
+            using (var context = new Context())
+            {
+                Product temp = context.Products.FirstOrDefault(p => p.ProductId == productId);
+                temp.Images = context.Images.Where(i => i.ProductId == productId).ToList();
+                temp.Brand = context.Brands.FirstOrDefault(b => b.BrandId == temp.BrandId);
+                temp.Category = context.Categories.FirstOrDefault(c => c.CategoryId == temp.CategoryId);
+
+                return temp;
+
+            }
+        }
+
+        public List<Product> GetTopRatedProducts()
+        {
+            using (var context = new Context())
+            {
+                return context.Products.Where(p=>p.CategoryId!=1003).OrderByDescending(p=>p.StarRate).Take(12).Include(i => i.Images).Include(b => b.Brand).Include(ca => ca.Category)
                     .ToList();
             }
         }

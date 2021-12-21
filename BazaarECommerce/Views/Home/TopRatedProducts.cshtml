@@ -1,0 +1,56 @@
+﻿@model List<EntityLayer.Concrete.Product>
+
+<style>
+    .productImgHeight {
+        height: 10rem;
+    }
+
+    .price {
+        margin-bottom: 0px;
+    }
+</style>
+
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+<div class="container-fluid p-0 mt-4">
+    <h2 class="py-4" style="color:darkslategray">Top Rated Products</h2>
+    <div class="row g-0">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 col-lg-2 col-sm-4" href="/Product/GetProductDetail?productId=@item.ProductId">
+                <div class="card" style="margin-bottom:2rem;">
+                    <div class="text-center rounded " style="height:15rem; background-color:white; ">
+                        <img class="img-fluid" src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
+                    </div>
+                    <div class="card-body">
+
+                        @if (item.ProductName.Length > 40)
+                        {
+                            if (!item.ProductName.Contains(" ")){ item.ProductName.Insert(item.ProductName.Length - 1, " "); }
+                            <h6 class="card-title" style="height:3rem">@item.ProductName.Substring(0, item.ProductName.Substring(0, item.ProductName.Length < 40 ? item.ProductName.Length : 40).LastIndexOf(" "))..</h6>
+                        }
+                        else
+                        {
+                            <h6 class="card-title" style="height:3rem">@item.ProductName</h6>
+
+                        }
+                        <div class="">
+                            <p class="card-text price ">@(item.Price-item.Discount)$</p>
+                            <h6 class="float-right">@item.StarRate <i class="fas fa-star" style="color:#fdb03d"></i> </h6>
+                        </div>
+                        <p style="color:gray; margin-top:0px;">
+                            <small>
+                                <del>@item.Price$</del>
+                                <b style="color:red">%@((int)((double)item.Discount/(item.Price) * 100))</b>
+                            </small>
+
+                        </p>
+
+                        <a href="/Product/GetProductDetail?productId=@item.ProductId" class="btn" style="color: white; background-color: #fdb03d">See Product</a>
+
+                    </div>
+                </div>
+            </div>
+
+        }
+    </div>
+</div>

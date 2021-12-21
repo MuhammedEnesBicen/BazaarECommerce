@@ -19,6 +19,67 @@ namespace DataAccessLayer.Migrations
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("EntityLayer.Concrete.Address", b =>
+                {
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddressName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AddressText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("District")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.ToTable("Addresses");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Book", b =>
+                {
+                    b.Property<int>("BookId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PageNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PublicationYear")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WriterName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("BookId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Books");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Brand", b =>
                 {
                     b.Property<int>("BrandId")
@@ -37,6 +98,21 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Brands");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.CampaignImage", b =>
+                {
+                    b.Property<int>("ImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ImageId");
+
+                    b.ToTable("CampaignImages");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Card", b =>
                 {
                     b.Property<int>("CardId")
@@ -44,23 +120,54 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("BankOrCredit")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CardNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Cvc2")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ExpirationDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("NameOnCard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SecurityCode")
+                        .HasColumnType("int");
 
                     b.HasKey("CardId");
 
                     b.HasIndex("CustomerId");
 
                     b.ToTable("Cards");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Cart", b =>
+                {
+                    b.Property<int>("CartId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("CartId");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Category", b =>
@@ -231,13 +338,22 @@ namespace DataAccessLayer.Migrations
                     b.Property<int>("Installment")
                         .HasColumnType("int");
 
+                    b.Property<int>("MonthlySalesCurrent")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MonthlySalesPrevious")
+                        .HasColumnType("int");
+
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
                     b.Property<string>("ProductName")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SellerId")
+                    b.Property<string>("Promotion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.Property<double>("StarRate")
@@ -249,48 +365,7 @@ namespace DataAccessLayer.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.HasIndex("SellerId");
-
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Seller", b =>
-                {
-                    b.Property<int>("SellerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("BusinessName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("RegisterDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SellerCity")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerFirstname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerIntroduction")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerLastname")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SellerPassword")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SellerPoint")
-                        .HasColumnType("int");
-
-                    b.HasKey("SellerId");
-
-                    b.ToTable("Sellers");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Size", b =>
@@ -338,6 +413,28 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Stocks");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Address", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Book", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Card", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Customer", "Customer")
@@ -347,6 +444,25 @@ namespace DataAccessLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Cart", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Customer", "Customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EntityLayer.Concrete.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Customer");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Computer", b =>
@@ -393,17 +509,9 @@ namespace DataAccessLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EntityLayer.Concrete.Seller", "Seller")
-                        .WithMany()
-                        .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Brand");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Seller");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Stock", b =>

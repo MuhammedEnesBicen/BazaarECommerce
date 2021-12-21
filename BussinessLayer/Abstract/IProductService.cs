@@ -15,6 +15,6 @@ namespace BussinessLayer.Abstract
 
         List<Product> GetByCategory(int categoryId);
         Product GetById(int id);
-        List<Product> GetBySeller(int sellerId);
+        List<Product> GetTopRatedProducts();
     }
 }

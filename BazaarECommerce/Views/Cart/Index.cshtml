@@ -1,0 +1,17 @@
+﻿@model List<EntityLayer.Concrete.Cart>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+
+
+
+
+
+<div class="shopping-cart section" id="cartList">
+ @await Html.PartialAsync("UpdateCartQuantity")
+</div>
+
+
+

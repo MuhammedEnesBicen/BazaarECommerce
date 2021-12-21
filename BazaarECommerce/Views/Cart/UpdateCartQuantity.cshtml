@@ -1,0 +1,122 @@
+﻿@model List<EntityLayer.Concrete.Cart>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <!-- Shopping Summery -->
+
+            <table class="table shopping-summery">
+                <thead>
+                    <tr class="main-hading">
+                        <th>PRODUCT</th>
+                        <th>NAME</th>
+                        <th class="text-center">UNIT PRICE</th>
+                        <th class="text-center">QUANTITY</th>
+                        <th class="text-center">TOTAL</th>
+                        @if (Model.Count > 0)
+                        {
+                            <th class="text-center"><i id="removeCart" onclick="emtyCart(@Model[0].CustomerId)" class="ti-trash remove-icon"></i></th>
+                        }
+                        else
+                        {
+                            <th class="text-center"><i id="removeCart" onclick="cartAlreadyEmty()" class="ti-trash remove-icon"></i></th>
+                        }
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Count < 1)
+                    {
+                        <tr>
+                            <td class="p-0 text-center" colspan="6">
+                                <h5 >Your cart is emty.</h5>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var item in Model)
+                    {
+
+
+                        <tr>
+                            <td class="image" data-title="No"><img src="@item.Product.Images[0].ImagePath" style="" alt="#"></td>
+                            @*https://via.placeholder.com/100x100*@
+
+                            <td class="product-des" data-title="Description">
+                                <p class="product-name"><a href="/Product/GetProductDetail?productId=@item.ProductId">@item.Product.ProductName</a></p>
+                                <p class="product-des">@item.Product.Description.</p>
+                            </td>
+                            <td class="price" data-title="Price"><span>$@(item.Product.Price - item.Product.Discount) </span></td>
+                            <td class="qty" data-title="Qty">
+                                <!-- Input Order -->
+                                <div class="input-group">
+                                    <div class="button minus text-center">
+                                        @*<a href="/Cart/UpdateCartQuantity?cartId=@item.CartId&quantity=-1" type="button" class="btn btn-primary" disabled="disabled" data-type="minus" data-field="quant[@item.CartId]">
+                                                <i class="ti-minus"></i>
+                                            </a>*@
+                                        <a onclick="changeQuantity(@item.CartId,@item.Quantity, -1)" type="button" class="btn btn-primary" disabled="disabled" data-type="minus" data-field="quant[@item.CartId]">
+                                            <i class="ti-minus"></i>
+                                        </a>
+                                    </div>
+                                    <input id="quantity[@item.CartId.ToString()]" name="quant[@item.CartId]" class="input-number" data-min="1" data-max="100" value="@item.Quantity">
+                                    <div class="button plus">
+                                        @*Original code who has js functionality <a href="/Cart/UpdateCartQuantity?cartId=@item.CartId&quantity=1" type="button" class="btn btn-primary btn-number" data-type="plus" data-field="quant[@item.CartId]">
+                                                <i class="ti-plus"></i>
+                                            </a>*@
+                                        <a onclick="changeQuantity(@item.CartId,@item.Quantity, 1)" type="button" class="btn btn-primary" data-type="plus" data-field="quant[@item.CartId]">
+                                            <i class="ti-plus"></i>
+                                        </a>
+
+                                    </div>
+                                </div>
+                                <!--/ End Input Order -->
+                            </td>
+                            <td class="total-amount" data-title="Total"><span>$@((item.Product.Price - item.Product.Discount) * item.Quantity)</span></td>
+                            <td class="action" data-title="Remove"><a href="/Cart/DeleteCart?cartId=@item.CartId"><i class="ti-trash remove-icon"></i></a></td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+            <!--/ End Shopping Summery -->
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <!-- Total Amount -->
+            <div class="total-amount">
+                <div class="row">
+                    <div class="col-lg-8 col-md-5 col-12">
+                        <div class="left">
+                            <div class="coupon">
+                                <form action="#" target="_blank">
+                                    <input name="Coupon" placeholder="Enter Your Coupon">
+                                    <button class="btn">Apply</button>
+                                </form>
+                            </div>
+                            <div class="checkbox">
+                                <label class="checkbox-inline" for="2"><input name="news" id="2" type="checkbox"> Shipping (+10$)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-7 col-12">
+                        <div class="right">
+                            <ul>
+                                <li>Cart Subtotal<span>$@ViewBag.totalCost</span></li>
+                                <li>Shipping<span>Free</span></li>
+                                <li>You Save<span>$@ViewBag.totalDiscount</span></li>
+                                <li class="last">You Pay<span>$@(ViewBag.totalCost - ViewBag.totalDiscount)</span></li>
+                            </ul>
+                            <div class="button5">
+                                <a href="#" class="btn">Checkout</a>
+                                <a href="#" class="btn">Continue shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ End Total Amount -->
+        </div>
+    </div>
+</div>

@@ -16,21 +16,28 @@
         margin-bottom: 0px;
     }
 </style>
+@{ 
+    List<EntityLayer.Concrete.Product> temp = Model;
+    void filter()
+    {
+        temp = Model.FindAll(x => x.StarRate >= 4.9);
+    }
+}
 
 <div class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-3">
-            @Html.Partial("_productFilterPart", @Model)
+            @await Html.PartialAsync("_productFilterPart", @Model)
         </div>
-        <div class="col-md-9">
-
-            <div class="row">
-                @foreach (var item in Model)
+        <div class="col-md-9" id="mydiv">
+            @await Html.PartialAsync("GetFilteredproducts")
+            @*<div class="row">
+                @foreach (var item in temp)
                 {
                     <div class="col-md-3">
                         <div class="card" style="margin-bottom:2rem;">
-                            <div class="text-center rounded " style="height:15rem; background-color:beige; ">
-                                <img class="img-fluid" style="background-color:" src="@item.Images[0].ImagePath" alt="Card image cap">
+                            <div class="text-center rounded " style="height:15rem; background-color:white; ">
+                                <img class="img-fluid"  src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
                             </div>
                             <div class="card-body">
                                 <h5 class="card-title">@item.ProductName</h5>
@@ -43,13 +50,14 @@
 
                                 </p>
 
-                                <a href="#" class="btn" style="color: white; background-color: #fdb03d">Add to Cart</a>
+                                <a href="/Product/GetProductDetail?productId=@item.ProductId" class="btn" style="color: white; background-color: #fdb03d">Add to Cart</a>
+
                             </div>
                         </div>
                     </div>
 
                 }
-            </div>
+            </div>*@
         </div>
     </div>
 </div>

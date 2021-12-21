@@ -45,7 +45,6 @@ namespace ConsoleWeb
                     Discount = 12,
                     Installment = 6,
                     Price = 12000,
-                    SellerId = 1,
                     StarRate = 4.8
                 });
                 cm.AddComputer(new Computer

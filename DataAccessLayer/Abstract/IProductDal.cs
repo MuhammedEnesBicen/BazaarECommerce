@@ -10,5 +10,7 @@ namespace DataAccessLayer.Abstract
     public interface IProductDal: IGenericDal<Product>
     {
         List<Product> GetListWithProduct(int productId);
+        Product GetProductWithJoin(int productId);
+        List<Product> GetTopRatedProducts();
     }
 }

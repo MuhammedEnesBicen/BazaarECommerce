@@ -2,7 +2,6 @@
 using DataAccessLayer.Concrete;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
-using EntityLayer.DTOs;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,6 @@ namespace DataAccessLayer.EntityFramework
                 return c.Computers.Include(p => p.Product)
                     .Include(c => c.Product.Images)
                     .Include(c => c.Product.Category)
-                    .Include(c => c.Product.Seller)
                     .Include(c => c.Product.Brand).ToList();
             }
         }

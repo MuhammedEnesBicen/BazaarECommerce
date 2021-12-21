@@ -13,11 +13,12 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </head>
 
 <body>  
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
+    
     <div class="d-flex justify-content-center" style="margin-top: 45px">
         <div class="modal-content col-md-5">
             <div class="modal-header">
@@ -49,6 +50,8 @@
                         @*<input type="password" class="form-control" placeholder="Password" name="Password" required="">*@
                         <span id='message'></span>
                     </div>
+                    <p style="color:red"> @ViewBag.message </p>
+                    <p style="color:green"> @ViewBag.message2 </p>
 
                     <div class="right-w3l">
                         <input id="submitregister" type="submit" class="form-control" value="Register" style="background: #fdb03d; color:white">

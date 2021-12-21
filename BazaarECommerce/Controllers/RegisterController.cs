@@ -21,11 +21,13 @@ namespace BazaarECommerce.Controllers
         public IActionResult Index(Customer customer)
         {
             customer.RegisterDate = DateTime.Now;
-            bool result = cm.CustomerAdd(customer);
+            ResultModel result = cm.CustomerAdd(customer);
             //if (cm.GetByEmail(customer.Email)==null)
             //{
-                //bu kodlar manager sınıfına taşındı
+            //bu kodlar manager sınıfına taşındı
             //}
+            if (result.Result) ViewBag.message2 = result.Message;
+            else ViewBag.message = result.Message;
             return View();
         }
     }
