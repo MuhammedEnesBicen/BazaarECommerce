@@ -1,6 +1,6 @@
 # BazaarECommerce 
 
-Bitirme projem kapsamında geliştirdiğim e-ticaret web uygulaması.
+Bitirme projem kapsamında geliştirmeye devam ettiğim e-ticaret web uygulaması.
 Proje Asp.Net Core, Entity Framework, Bootstrap, jQuery teknolojileri kullanılarak geliştirilmektedir.
 
 Aşağıda projenin birkaç görüntüsü bulunmaktadır.
