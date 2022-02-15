@@ -1,0 +1,73 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>EBazaar Admin Panel</title>
+
+    <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+
+    <script src="~/lib/popperjs/popper.js"></script>
+    <script src="~/js/site.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+</head>
+<body>
+
+    <div class="container-fluid  ">
+        <!-- NavBar -->
+        <nav>
+            <div class="row  justify-content-between g-0 p-3 shadow">
+                <div class="col-4 ">
+                    <a href="/Home/Index"><img src="~/EshopFree/images/ebazaar.png" alt="logo"></a>
+                </div>
+                <div class="col-4 text-center">
+                    <h3>Admin Panel</h3>
+                </div>
+                <div class=" col-4 d-flex justify-content-end">
+
+                        <a id="LoginLink" href="/Home/LogOut/" class="flex-column" style="text-decoration:none; height:max-content;"><i class="fas fa-sign-out-alt"></i>Log Out</a>
+
+                </div>
+            </div>
+        </nav>
+        <!--/ End NavBar -->
+
+
+        <!-- Side Menu-->
+        <div class="row mt-3 g-0">
+            <div class="col-3">
+                <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Add Product</a>
+                    <a onclick="clearImagesFromMemory()" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Update & Delete Product</a>
+                    
+                    <a class="nav-link " id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Brand Operations</a>
+                </div>
+            </div>
+
+            <div class="col-9">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">@await Html.PartialAsync("AddProduct", (BazaarECommerce.Models.ProductVM)ViewBag.productVM)</div>@*, (BazaarECommerce.Models.ProductVM)ViewBag.productVM)*@
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">@await Html.PartialAsync("UpdateProduct", (BazaarECommerce.Models.ProductVM)ViewBag.productVM)</div>
+                    
+                    <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">@await Html.PartialAsync("BrandOperations", (List<EntityLayer.Concrete.Brand>)ViewBag.brands)</div>
+                </div>
+            </div>
+        </div>
+        <!--/ Side Menu End -->
+
+    </div>
+
+
+</body>
+</html>

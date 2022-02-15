@@ -1,0 +1,104 @@
+﻿@model List<EntityLayer.Concrete.Brand>
+
+<div id="brandOperationsArea">
+
+<table class="table table-borderless table-hover">
+    <tr>
+        <th>Brand Id</th>
+        <th colspan="2">Brand Name</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+<tr>
+
+
+
+        <td id="BrandId">@item.BrandId</td>
+        <td>
+
+            @Html.TextBoxFor(b => item.BrandName,new { id= item.BrandId})
+
+        </td>
+        <td class="justify-content-evenly">
+            <button onClick="brandDelete(@item.BrandId,'delete')" class="btn btn-danger">Delete</button>
+            <button onClick="brandUpdate(@item.BrandId, 'update')"  class="btn btn-secondary">Update</button>
+
+        </td>
+    
+
+</tr>
+    }
+    </table>
+
+<b>Add New Brand</b>
+<div class="form">
+    <input id="newBrand" class="form-control" type="text" placeholder="Brand name..." />
+    <button onclick="addBrand('add')" class="btn btn-success">Add Brand</button>
+</div>
+
+</div>
+
+<script>
+    function brandUpdate(brandId, operation) {
+        var brandName = $('#'+brandId).val();
+        $.post('/Admin/BrandOperations?brandId=' + brandId + "&brandName=" + brandName + "&operation=" + operation)
+            .then(function (result) {
+
+                Swal.fire(
+                    'Info!',
+                    'Brand updated successfuly.',
+                    'success'
+                ).then(function myfunction() {
+                    $('#brandOperationsArea').html(result);
+                });
+
+            });
+    }
+    function brandDelete(brandId, operation) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You're about to delete a brand, it can affect database badly, are you sure?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.post('/Admin/BrandOperations?brandId=' + brandId + "&brandName=" + "" + "&operation=" + operation)
+                    .then(function (result) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Brand deleted successfuly.',
+                            'success'
+                        ).then(function myfunction() {
+                            $('#brandOperationsArea').html(result);
+                        });
+                    })
+                    ;
+
+
+            }
+        })
+
+
+
+    }
+
+    function addBrand( operation) {
+        var brandName = $('#newBrand').val();
+        $.post('/Admin/BrandOperations?brandId=' + 0 + "&brandName=" + brandName + "&operation=" + operation)
+            .then(function (result) {
+                
+                Swal.fire(
+                    'Info!',
+                    'Brand added successfuly.',
+                    'success'
+                ).then(function () {
+                    $('#brandOperationsArea').html(result);
+                });
+                
+            });
+    }
+</script>

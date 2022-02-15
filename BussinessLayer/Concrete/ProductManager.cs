@@ -18,21 +18,26 @@ namespace BussinessLayer.Concrete
             _productDal = productDal;
         }
 
+        public List<Product> FilterProducts(string filterText)
+        {
+            return _productDal.FilterProducts(filterText);
+        }
+
         public List<Product> GetByCategory(int categoryId)
         {
-            //return _productDal.GetAll(p => p.CategoryId == categoryId);
             return _productDal.GetListWithProduct(categoryId);
         }
 
         public Product GetById(int id)
         {
-            //return _productDal.Get(p => p.ProductId == id);
             return _productDal.GetProductWithJoin(id);
         }
 
+        public List<Product> GetMostLovedBooks()
+        {
+            return _productDal.GetMostLovedBooks();
+        }
 
-
-        // this logis need to improve
         public List<Product> GetTopRatedProducts()
         {
             return _productDal.GetTopRatedProducts();

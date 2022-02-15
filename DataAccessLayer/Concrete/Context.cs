@@ -23,7 +23,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<Computer> Computers { get; set; }
+        public DbSet<Electronic> Electronics { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Size> Sizes { get; set; }
         public DbSet<Stock> Stocks { get; set; }
@@ -31,6 +31,7 @@ namespace DataAccessLayer.Concrete
         public DbSet<CampaignImage> CampaignImages { get; set; }
         public DbSet<Book> Books { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Clothe> Clothes { get; set; }
 
 
 

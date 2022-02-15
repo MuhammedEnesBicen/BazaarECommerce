@@ -16,5 +16,8 @@ namespace BussinessLayer.Abstract
         List<Product> GetByCategory(int categoryId);
         Product GetById(int id);
         List<Product> GetTopRatedProducts();
+        List<Product> GetMostLovedBooks();
+        List<Product> FilterProducts(string filterText);
+
     }
 }

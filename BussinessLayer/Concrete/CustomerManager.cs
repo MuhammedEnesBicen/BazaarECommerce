@@ -72,7 +72,7 @@ namespace BussinessLayer.Concrete
 
         public Customer GetById(int customerId)
         {
-            return _iCustomerDal.Get(c => c.CustomerId == customerId);
+            return _iCustomerDal.GetByCustomerId(customerId);
         }
     }
 }

@@ -12,30 +12,42 @@
 
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <div class="container-fluid p-0 mt-4">
+
     <h2 class="py-4" style="color:darkslategray">Top Rated Products</h2>
     <div class="row g-0">
         @foreach (var item in Model)
         {
             <div class="col-md-3 col-lg-2 col-sm-4" href="/Product/GetProductDetail?productId=@item.ProductId">
                 <div class="card" style="margin-bottom:2rem;">
-                    <div class="text-center rounded " style="height:15rem; background-color:white; ">
-                        <img class="img-fluid" src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
-                    </div>
+                    <a href="/Product/GetProductDetail?productId=@item.ProductId">
+                        <div class="text-center rounded " style="height:15rem; background-color:white; ">
+                            @if (item?.Images?.Count > 0)
+                            {
+                                <img class="img-fluid" src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
+                            }
+                            else
+                            {
+                                <img class="img-fluid" src="/images/imagedefault.png" alt="Card image cap" style="max-height:100%; max-width:85%">
+
+                            }
+                        </div>
+                    </a>
                     <div class="card-body">
+                        <a href="/Product/GetProductDetail?productId=@item.ProductId" style="color:black">
+                            @if (item.ProductName.Length > 40)
+                            {
+                                if (!item.ProductName.Contains(" ")) { item.ProductName.Insert(item.ProductName.Length - 1, " "); }
+                                <h6 class="card-title" style="height:3rem">@item.ProductName.Substring(0, item.ProductName.Substring(0, item.ProductName.Length < 40 ? item.ProductName.Length : 40).LastIndexOf(" "))..</h6>
+                            }
+                            else
+                            {
+                                <h6 class="card-title" style="height:3rem">@item.ProductName</h6>
 
-                        @if (item.ProductName.Length > 40)
-                        {
-                            if (!item.ProductName.Contains(" ")){ item.ProductName.Insert(item.ProductName.Length - 1, " "); }
-                            <h6 class="card-title" style="height:3rem">@item.ProductName.Substring(0, item.ProductName.Substring(0, item.ProductName.Length < 40 ? item.ProductName.Length : 40).LastIndexOf(" "))..</h6>
-                        }
-                        else
-                        {
-                            <h6 class="card-title" style="height:3rem">@item.ProductName</h6>
-
-                        }
+                            }
+                        </a>
                         <div class="">
                             <p class="card-text price ">@(item.Price-item.Discount)$</p>
-                            <h6 class="float-right">@item.StarRate <i class="fas fa-star" style="color:#fdb03d"></i> </h6>
+                            <h6 class="float-right">@item.StarRate <i class="fa fa-star" style="color:#fdb03d"></i> </h6>
                         </div>
                         <p style="color:gray; margin-top:0px;">
                             <small>

@@ -11,7 +11,9 @@ namespace EntityLayer.Concrete
     {
         [Key]
         public int AddressId { get; set; }
+        [Display(Name ="Adress  Name")]
         public string AddressName { get; set; }
+        [Display(Name = "Adress  Text")]
         public string AddressText { get; set; }
         public string City { get; set; }
         public string District { get; set; }

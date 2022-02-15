@@ -1,0 +1,14 @@
+﻿@model List<EntityLayer.Concrete.Product>
+
+<div>
+
+    @foreach (var item in Model)
+    {
+        <button onclick="getProduct(@item.ProductId)"  style="color:darkslategrey">@item.ProductName</button>
+        <div class="dropdown-divider"></div>
+    }
+    @if (Model?.Count < 1)
+    {
+        <p style="background-color:red;color:white;">there is no product</p>
+    }
+</div>

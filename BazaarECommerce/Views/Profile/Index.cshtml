@@ -1,0 +1,191 @@
+﻿@model EntityLayer.Concrete.Customer
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_NavBar.cshtml";
+}
+
+@{
+    List<string> GenderList = new List<string>() { "male,female" };
+}
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<div class="row mt-4">
+    <div class="col-md-6 rounded-2 bg-light p-3">
+        <h4>My Informations</h4>
+        <div class="dropdown-divider"></div>
+        @using (Html.BeginForm("Index", "Profile", new { whichTable = "customer" }, FormMethod.Post))
+        {
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Name)
+                    @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @required = "", @type = "text" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Surname)
+                    @Html.TextBoxFor(x => x.Surname, new { @class = "form-control", @required = "", @type = "text" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Phone)
+                @Html.TextBoxFor(x => x.Phone, new { @class = "form-control", @required = "", @type = "phone" })
+            </div>
+
+            <div class="form-group">
+                <div class="row ml-1">
+                    <label asp-for="@Model.Gender" class="mr-1">Gender</label>
+                    <select asp-for="@Model.Gender" >
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Other</option>
+                    </select>
+                    <div class="col-6">
+                        <label asp-for="@Model.BirthDate" class="mr-1"></label>
+                        <input asp-for="@Model.BirthDate" type="date" />
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="form-group">
+
+            </div>
+
+
+            <div class="right-w3l">
+                <input  type="submit" class="form-control" value="Update" style="background: green; color:white"> @*#fdb03d*@
+            </div>
+        }
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 rounded-2 bg-light p-3">
+        <h4>Change Password</h4>
+        <div class="dropdown-divider"></div>
+        <div class="form-group">
+            <label>Current Password</label>
+            <input type="password" class="form-control" required id="currentPassword"/>
+        </div>
+        <div class="form-group">
+            <label>New Password</label>
+            <input type="password" class="form-control" required id="password"/>
+        </div>
+        <div class="form-group">
+            <label>New Password Again</label>
+            <input type="password" class="form-control" required id="confirm_password" />
+            <span id='message'></span>
+        </div>
+        <p style="color:red"> @ViewBag.message </p>
+        <p style="color:green"> @ViewBag.message2 </p>
+
+        <div class="right-w3l">
+            <input id="submitregister" type="submit" class="form-control" value="Change Password" style="background: purple; color:white"> @*#fdb03d*@
+        </div>
+    </div>
+
+</div>
+
+@*Adress and email change section*@
+<div class="row mt-4">
+    <div class="col-md-6 rounded-2 bg-light p-3">
+        <h4>Address Informations</h4>
+        <div class="dropdown-divider"></div>
+        @using (Html.BeginForm("Index", "Profile", new { whichTable = "address" }, FormMethod.Post))
+        {
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Address.AddressName)
+                    @Html.TextBoxFor(x => x.Address.AddressName, new { @class = "form-control", @required = "", @type = "text" })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Address.AddressText)
+                    @Html.TextAreaFor(x => x.Address.AddressText, new { @class = "form-control", @required = "", @type = "text" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Address.City)
+                @Html.TextBoxFor(x => x.Address.City, new { @class = "form-control", @required = "", @type = "phone" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Address.District)
+                @Html.TextBoxFor(x => x.Address.District, new { @class = "form-control", @required = "", @type = "phone" })
+            </div>
+
+
+            <div class="right-w3l">
+                <input type="submit" class="form-control" value="Update Address" style="background: mediumblue; color:white"> @*#fdb03d*@
+            </div>
+        }
+    </div>
+    <div class="col-md-1"></div>
+    <div class="col-md-5 rounded-2 bg-light p-3">
+        <h4>Change Email</h4>
+        <div class="dropdown-divider"></div>
+        <label>Your current email is: <b>@Model.Email</b></label>
+        <div class="form-group">
+            <label>New Email</label>
+            <input type="email" class="form-control" required id="newEmail" />
+        </div>
+        <div class="right-w3l">
+            <input id="submitemail" type="submit" class="form-control" value="Send me validation code" style="background: purple; color:white"> @*#fdb03d*@
+        </div>
+        <div class="form-group">
+            <label class="pt-5">Validation Code</label>
+            <input type="text" class="form-control" required id="valCode" />
+        </div>
+
+        <div class="right-w3l">
+            <input id="submitregister" type="submit" class="form-control" value="Change Email" style="background: gray; color:white" disabled> @*#fdb03d*@
+        </div>
+    </div>
+
+</div>
+
+<script>
+    $('#confirm_password').on('keyup', function () {
+        if ($('#password').val() == $('#confirm_password').val()) {
+            $('#message').html('Matching').css('color', 'green');
+            $('#submitregister').html('').prop('disabled', false).css('background', '#fdb03d');
+        } else {
+            $('#message').html('Not Matching').css('color', 'red');
+            $('#submitregister').html('').prop('disabled', true).css({ 'background': "gray" });
+        }
+    });
+
+    $('#submitregister').click(function () {
+        var password = $('#currentPassword').val()
+        var newPassword = $('#confirm_password').val()
+        if (newPassword.length < 4) {
+            $('#message').html('Password must be at least 4 characters.').css('color', 'red');
+        }
+        else {
+            $.post('/Profile/ChangePassword?oldPassword=' + password + "&newPassword=" + newPassword)
+                .then(function (result) {
+                    if (result.result) {
+                        Swal.fire({
+                            title: 'Password Status',
+                            text: result.message,
+                            icon: 'success',
+
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            title: 'Password Status',
+                            text: result.message,
+                            icon: 'warning',
+
+                        })
+                    }
+
+                });
+        }
+    });
+    $('#submitemail').click(function () {
+        Swal.fire({
+            title: 'Email Change',
+            text: 'EBazaar does not currently support mail change',
+            icon: 'info',
+        })
+    });
+</script>
+

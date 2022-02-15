@@ -17,6 +17,7 @@ namespace DataAccessLayer.EntityFramework
         {
             using (var context = new Context())
             {
+                #region Alternative Version
                 //var result = from p in context.Products
                 //             join c in context.Categories
                 //             on p.CategoryId equals c.CategoryId
@@ -41,9 +42,18 @@ namespace DataAccessLayer.EntityFramework
 
                 //             };
                 //return result.ToList();
-
+                #endregion
 
                 return context.Products.Where(p=> p.CategoryId==categoryId).Include(i => i.Images).Include(b=>b.Brand).Include(ca =>ca.Category)
+                    .ToList();
+            }
+        }
+
+        public List<Product> GetMostLovedBooks()
+        {
+            using (var context = new Context())
+            {
+                return context.Products.Where(p => p.CategoryId == 1003).OrderByDescending(p => p.StarRate).Take(12).Include(i => i.Images).Include(b => b.Brand).Include(ca => ca.Category)
                     .ToList();
             }
         }
@@ -53,10 +63,12 @@ namespace DataAccessLayer.EntityFramework
             using (var context = new Context())
             {
                 Product temp = context.Products.FirstOrDefault(p => p.ProductId == productId);
-                temp.Images = context.Images.Where(i => i.ProductId == productId).ToList();
-                temp.Brand = context.Brands.FirstOrDefault(b => b.BrandId == temp.BrandId);
-                temp.Category = context.Categories.FirstOrDefault(c => c.CategoryId == temp.CategoryId);
-
+                if (temp != null)
+                {
+                    temp.Images = context.Images.Where(i => i.ProductId == productId).ToList();
+                    temp.Brand = context.Brands.FirstOrDefault(b => b.BrandId == temp.BrandId);
+                    temp.Category = context.Categories.FirstOrDefault(c => c.CategoryId == temp.CategoryId);
+                }
                 return temp;
 
             }
@@ -68,6 +80,14 @@ namespace DataAccessLayer.EntityFramework
             {
                 return context.Products.Where(p=>p.CategoryId!=1003).OrderByDescending(p=>p.StarRate).Take(12).Include(i => i.Images).Include(b => b.Brand).Include(ca => ca.Category)
                     .ToList();
+            }
+        }
+
+        public List<Product> FilterProducts(string filterText)
+        {
+            using (var context = new Context())
+            {
+                return context.Products.Where(p => p.ProductName.Contains(filterText)).Take(4).ToList();
             }
         }
     }

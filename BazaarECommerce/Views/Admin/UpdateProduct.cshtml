@@ -1,0 +1,252 @@
+﻿@model BazaarECommerce.Models.ProductVM
+@*Second Area*@
+<div style="" id="updateArea">
+
+
+
+
+    <input class="form-control mb-2" placeholder="search by product name" id="searchProduct" oninput="getSuggestions()" />
+    <div id="searchComplete" style="background-color:HighlightText"></div>
+    @Model?.Product?.ProductId
+    <div class="pb-3">
+        <h4>Add Product Images <span onclick="ProductImagesInstructions()"><small><i class="fa fa-question-circle"></i></small></span></h4>
+        <div class="dropdown-divider"></div>
+        @if (Model?.Product?.Images != null)
+        {
+            <div class="row">
+                @foreach (var item in Model?.Product?.Images)
+                {
+                    <div class="col-md-3 col-lg-2 col-sm-4">
+                        <div class="card" style="margin-bottom:2rem;">
+                            <div class="text-center rounded " style="height:10rem; background-color:white; ">
+                                <img class="img-fluid" src="@item.ImagePath" alt="Card image cap" style="max-height:100%; max-width:100%; ">
+                            </div>
+                            <div class="card-body text-center">
+
+                                <p class="card-text">@item.ImagePath</p>
+
+                                <button onclick="deleteImage(@item.ProductId,@item.ImageId)" class="btn" style="color: white; background-color: red">Delete</button>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+
+
+        <input id="submitFileUpdate" type="file" accept="image/*" multiple formenctype="multipart/form-data" alt="Add Images"
+               style="border:solid 5px beige; background-color:#c2efdb; width:100%;" />
+        <button class="btn btn-success" onclick="uploadFilesUpdate('submitFileUpdate',@Model?.Product?.ProductId)">Add these images to product</button>
+    </div>
+
+    <div class="g-0 ">
+
+        <h4>Product Informations</h4>
+        <div class="dropdown-divider"></div>
+
+        @using (Html.BeginForm("UpdateProduct", "Admin", new { productId =Model?.Product?.ProductId }, FormMethod.Post))
+        {
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Product.ProductName)
+                @Html.TextBoxFor(x => x.Product.ProductName, new { @class = "form-control", @required = "", @type = "text" })
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Product.Price)
+                    @Html.TextBoxFor(x => x.Product.Price, new { @class = "form-control", @required = "", @type = "number", @min = 1 })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Product.Discount)
+                    @Html.TextBoxFor(x => x.Product.Discount, new { @class = "form-control", @required = "", @type = "text" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Product.Installment)
+                    @Html.TextBoxFor(x => x.Product.Installment, new { @class = "form-control", @required = "", @type = "number", @min = 1 })
+                </div>
+                <div class="form-group col-md-6">
+                    @Html.LabelFor(x => x.Product.Quantity)
+                    @Html.TextBoxFor(x => x.Product.Quantity, new { @class = "form-control", @required = "", @type = "number", @min = 1 })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(x => x.Product.Promotion)
+                @Html.TextAreaFor(x => x.Product.Promotion, new { @class = "form-control", @required = "", @type = "phone" })
+            </div>
+
+            <div class="form-group">
+                <div class="row ml-1 ">
+                    <label asp-for="@Model.Product.Category" class="mr-1">Category</label>
+                    <select asp-for="@Model.Product.CategoryId" id="categorySelectUpdate" onchange="categoryChangedUpdate()">
+                        @foreach (var item in ViewBag.categories)
+                        {
+                            <option value="@item.CategoryId">@item.CategoryName</option>
+                        }
+                    </select>
+                </div>
+                <div class="row ml-1">
+                    <input class="form-text" id="brandSearchUpdate" type="text" placeholder="Search.." onkeyup="filterFunctionUpdate()" />
+                    <label asp-for="@Model.Product.Brand" class="mr-1">Brand</label>
+
+                    <select class="form-select" asp-for="@Model.Product.BrandId" id="brandSelectUpdate" style="min-width:5rem">
+                        @foreach (var brand in ViewBag.brands)
+                        {
+                            <option value="@brand.BrandId">@brand.BrandName</option>
+                        }
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+            </div>
+
+            <div id="secondTableUpdate">
+                @await Html.PartialAsync("GetProductsSecondTable", (BazaarECommerce.Models.ProductVM)Model)
+            </div>
+
+            <div class="row">
+                <input type="submit" class="form-control col-10" value="Update Product" style="background: green; color:white"> @*#fdb03d*@
+                <input onclick="deleteProduct(@Model?.Product?.ProductId)" type="" class="form-control col-2" value="Delete Product" style="background: red; color:white">
+            </div>
+        }
+
+
+    </div>
+
+
+
+</div>
+
+
+<script>
+
+    function getSuggestions() {
+        var searchText = $('#searchProduct').val();
+        if (searchText == "") {
+            $('#searchComplete').html("");
+        } else {
+            $.get("/Admin/GetSearchSuggestions?searchText=" + searchText).then(function (result) {
+                $('#searchComplete').html(result);
+            });
+        }
+
+    }
+    function getProduct(productId) {
+        $.get("/Admin/UpdateProduct?productId=" + productId).then(function (result) {
+            $('#updateArea').html(result);
+        });
+
+    }
+
+    //categoryChangedUpdate();
+    function filterFunctionUpdate() {
+        var input, filter, ul, li, option, i;
+        input = document.getElementById("brandSearchUpdate");
+        filter = input.value.toUpperCase();
+        div = document.getElementById("brandSelectUpdate");
+        option = div.getElementsByTagName("option");
+
+
+        //div.focus();
+        div.size = 3;
+
+        for (i = 0; i < option.length; i++) {
+            txtValue = option[i].textContent || option[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                option[i].style.display = "";
+            } else {
+                option[i].style.display = "none";
+            }
+        }
+
+    }
+    function categoryChangedUpdate() {
+        var catId = $('#categorySelectUpdate').val();
+        $.post("/Admin/GetProductsSecondTable?categoryId=" + catId)
+            .then(function (result) {
+                $('#secondTableUpdate').html(result);
+            });
+    }
+
+
+    function uploadFilesUpdate(inputId, productId) {
+        var input = document.getElementById(inputId);
+        var files = input.files;
+        if (productId == "") {
+            Swal.fire({
+                title: 'Image Add',
+                text: 'you have to choose a product.',
+                icon: 'info',
+            })
+        }
+        else if (files.length < 1) {
+            Swal.fire({
+                title: 'Image Add',
+                text: 'you didn\'t choose any image.',
+                icon: 'info',
+            })
+        }
+        else {
+            var formData = new FormData();
+
+            for (var i = 0; i != files.length; i++) {
+                formData.append("files", files[i]);
+            }
+            formData.append("productId", productId);
+
+
+            $.ajax(
+                {
+                    url: "/Admin/AddImages",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    type: "POST",
+                    success: function (data) {
+                        $.get("/Admin/UpdateProduct?productId=" + productId).then(function (result) {
+                            $('#updateArea').html(result);
+                        });
+                        alert("Files Uploaded!");
+                    }
+                }
+            );
+        }
+    }
+
+    function deleteImage(productId, imageId) {
+        $.post("/Admin/DeleteImage?productId=" + productId + "&imageId=" + imageId).then(function () {
+            $.get("/Admin/UpdateProduct?productId=" + productId).then(function (result) {
+                $('#updateArea').html(result);
+            });
+        });
+    }
+
+
+    function ProductImagesInstructions() {
+        Swal.fire({
+            title: 'Instructions',
+            text: 'Product images will be adding db alphabetic order.',
+            icon: 'info',
+
+        })
+    }
+
+    function deleteProduct(productId) {
+        $.post("/Admin/DeleteProduct?productId=" + productId).then(function () {
+            Swal.fire({
+                title: 'Delete Product',
+                text: 'deletion was successfully done.',
+                icon: 'success',
+
+            })
+
+        });
+    }
+</script>

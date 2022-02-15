@@ -2,20 +2,9 @@
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_NavBar.cshtml";
-}
-@{
-    
-
 
 }
-@functions{
-    bool checkRememberme = false;
-    void changeRemeberMe()
-    {
-        if (checkRememberme) checkRememberme = false;
-        else checkRememberme = true;
-    }
-}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -41,7 +30,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                @using (Html.BeginForm("Index", "Login", new { rememberMe = checkRememberme }, FormMethod.Post))
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
                 {
                     <form action="#" method="post">
                         <div class="form-group">
@@ -59,10 +48,21 @@
                         </div>
 
                         <div class="sub-w3l">
-                            <div class="custom-control custom-checkbox mr-sm-2">
-                                <input type="checkbox" class="custom-control-input" id="customControlAutosizing" onclick="@{changeRemeberMe();} ">
-<label class="custom-control-label" for="customControlAutosizing">Remember me?</label>
-                            </div>
+                            @if (ViewBag.rememberMe)
+                            {
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="rememberme"
+                                           checked>
+                                    <label class="custom-control-label" for="rememberme">Remember me?</label>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="custom-control custom-checkbox mr-sm-2">
+                                    <input type="checkbox" class="custom-control-input" id="rememberme">
+                                    <label class="custom-control-label" for="rememberme">Remember me?</label>
+                                </div>
+                            }
                         </div>
                         <p class="text-center dont-do mt-3">
                             Don't have an account?
@@ -103,19 +103,12 @@
 
 </html>
 <script>
-    @*$('#submitlogin').click(function () {
-
-        if (@ViewBag.message.toString() != "true") {
-            Swal.fire(
-                'Info!',
-                'Your cart is already empty.',
-                'success'
-            )
-
-        }
+    $('#rememberme').change(function () {
+        var value = $('#rememberme').is(":checked");
+        $.post("/Login/ChangeRememberMeOption?value=" + value);
+    });
 
 
-    });*@
 
 </script>
 

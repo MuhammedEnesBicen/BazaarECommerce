@@ -28,6 +28,7 @@ namespace EntityLayer.Concrete
 
 
         public List<Card> Cards { get; set; }
+        public Address Address { get; set; }
 
     }
 }

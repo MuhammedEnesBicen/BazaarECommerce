@@ -11,5 +11,6 @@ namespace DataAccessLayer.Abstract
     {
 
         //public Customer GetByEmail(string email);
+        public Customer GetByCustomerId(int customerId);
     }
 }

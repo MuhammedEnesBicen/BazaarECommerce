@@ -22,10 +22,6 @@ namespace BazaarECommerce.Controllers
         {
             customer.RegisterDate = DateTime.Now;
             ResultModel result = cm.CustomerAdd(customer);
-            //if (cm.GetByEmail(customer.Email)==null)
-            //{
-            //bu kodlar manager sınıfına taşındı
-            //}
             if (result.Result) ViewBag.message2 = result.Message;
             else ViewBag.message = result.Message;
             return View();

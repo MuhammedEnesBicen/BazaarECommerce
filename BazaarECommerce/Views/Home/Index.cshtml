@@ -4,16 +4,19 @@
     Layout = "~/Views/Shared/_NavBar.cshtml";
 }
 <style>
-    .div a span{
-        background-color:blue;
+
+    #carouselExampleControls a:hover + a span {
+        background-color: red;
     }
 </style>
 
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
 <div class=" rounded mt-2" style="border: 1px solid #ddd;">
+
+
     <div id="carouselExampleControls"
-         class="carousel slide"@*slide carousel-fade*@
+         class="carousel slide" @*slide carousel-fade*@
          data-ride="carousel">
         <div class="carousel-inner imgDiv">
             @for (int i = 0; i < Model.Count; i++)
@@ -46,12 +49,13 @@
            href="#carouselExampleControls"
            role="button"
            data-slide="next">
-            <span class="carousel-control-next-icon" style="background-color: red; height: 35px; width: 35px; border-radius: 50%; color:black; "
+            <span class="carousel-control-next-icon" style=" height: 35px; width: 35px; border-radius: 50%; color:black; "
                   aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
     </div>
 </div>
 <div>@await Html.PartialAsync("TopRatedProducts", (List<EntityLayer.Concrete.Product>)ViewBag.toprateds)</div>
+<div>@await Html.PartialAsync("MostLovedBooks", (List<EntityLayer.Concrete.Product>)ViewBag.mostLoved)</div>
 
 

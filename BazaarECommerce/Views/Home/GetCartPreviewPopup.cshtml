@@ -1,0 +1,28 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Cart>
+<div class="dropdown-cart-header">
+    <span>@Model.ToList().Count Items</span>
+    <a href="/Cart/Index/">View Cart</a>
+</div>
+<ul class="shopping-list">
+    @foreach (var item in Model)
+    {
+        <li>
+            <a href="#" class="remove" title="Remove this item"><i class="fa fa-remove"></i></a>
+            @if (item?.Product.Images?.Count > 0) { 
+                <a class="cart-img" href="#"><img src=@item.Product.Images[0].ImagePath alt="#"></a>
+            }else{
+            <a class="cart-img" href="#"><img src="/images/imagedefault.png" alt="#"></a>
+
+            }
+            <h4><a href="/Product/GetProductDetail?productId=@item.Product.ProductId">@item.Product.ProductName</a></h4>
+            <p class="quantity"><span class="amount"> </span></p>
+        </li>
+    }
+</ul>
+<div class="bottom">
+    <div class="total">
+        <span>Total</span>
+        <span class="total-amount">$@ViewBag.totalCost.ToString()</span>
+    </div>
+    <a href="checkout.html" class="btn animate">Checkout</a>
+</div>

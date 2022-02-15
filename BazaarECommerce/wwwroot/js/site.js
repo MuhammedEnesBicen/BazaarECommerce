@@ -3,36 +3,6 @@
 
 // Write your JavaScript code.
 
-
-
-
-//$('#removeCart').click(function () {
-
-
-//    Swal.fire({
-//        title: 'Are you sure?',
-//        text: "You're about to empty the cart completely, are you sure?",
-//        icon: 'warning',
-//        showCancelButton: true,
-//        confirmButtonColor: '#3085d6',
-//        cancelButtonColor: '#d33',
-//        confirmButtonText: 'Yes, delete it!'
-//    }).then((result) => {
-//        if (result.isConfirmed) {
-//            $.post("/Cart/EmptyCart?customerId=" + 2);
-//            //Swal.fire(
-//            //    'Deleted!',
-//            //    'Your cart is completely emptied.',
-//            //    'success'
-//            //)
-
-//        }
-//    })
-//});
-
-
-
-
 function emtyCart(customerId) {
 
     Swal.fire({
@@ -60,7 +30,6 @@ function emtyCart(customerId) {
     })
 }
 
-
 function cartAlreadyEmty() {
     Swal.fire(
         'Info!',
@@ -69,7 +38,6 @@ function cartAlreadyEmty() {
     )
 
 }
-
 
 function changeQuantity(cartId, quantity, decrease) {
     if (quantity == 0 && decrease == -1) { }
@@ -80,35 +48,104 @@ function changeQuantity(cartId, quantity, decrease) {
     }
 }
 
-function brandFilter(categoryId,brandId) {
+function brandFilter(brandId) {
+    $.post("/Product/BrandFilter?brandId=" + brandId).then(
+        function () {
 
-    $.post("/Product/GetFilteredProducts?categoryId=" + categoryId, "&brandId=" + brandId).then(
-        function (result) {
-            $("#mydiv").html(result);
+            $.post("/Product/GetFilteredProducts").then(
+                function (result) {
+                    $("#mydiv").html(result);
+                }
+            );
+
+        }
+    );
+
+
+}
+
+function starFilter(starRate) {
+    $.post("/Product/StarFilter?starRate=" + starRate).then(
+        function () {
+
+            $.post("/Product/GetFilteredProducts").then(
+                function (result) {
+                    $("#mydiv").html(result);
+                }
+            );
+
+        }
+    );
+
+
+}
+
+function textFilter() {
+    var text = $("#searchInput").val();
+    $.post("/Product/TextFilter?text=" + text).then(
+        function () {
+
+            $.post("/Product/GetFilteredProducts").then(
+                function (result) {
+                    $("#mydiv").html(result);
+                }
+            );
+
         }
     );
 }
 
+function priceFilter() {
+    var min = $("#minPrice").val();
+    var max = $("#maxPrice").val();
+    $.post("/Product/PriceFilter?min=" + min+ "&max="+max).then(
+        function () {
+
+            $.post("/Product/GetFilteredProducts").then(
+                function (result) {
+                    $("#mydiv").html(result);
+                }
+            );
+
+        }
+    );
+}
+
+
 function addItemToCart(productId, quantity, customerId) {
-    $.post("/Cart/AddItemToCart?productId=" + productId + "&quantity=" + quantity + "&customerId=" + customerId).then(
-        function (result) {
-            if (result.result == true) {
-                Swal.fire({
-                    title: 'Info',
-                    text: result.message,
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Okey'
-                })
-            } else {
-                Swal.fire({
-                    title: 'Info',
-                    text: result.message,
-                    confirmButtonColor: '#f20f0f',
-                    confirmButtonText: 'Okey'
-                })
-            }
-            
-        }    );
+
+    $.post("/Home/IsAuthorize").then(function (result) {
+        if (result == false) {
+            Swal.fire(
+                'Info!',
+                'It seems you are not logged in. You cant add item to cart.',
+                'success'
+            )
+        }
+        else {
+            $.post("/Cart/AddItemToCart?productId=" + productId + "&quantity=" + quantity + "&customerId=" + customerId).then(
+                function (result) {
+                    if (result.result == true) {
+                        Swal.fire({
+                            title: 'Info',
+                            text: result.message,
+                            confirmButtonColor: '#3085d6',
+                            confirmButtonText: 'Okey'
+                        })
+                    } else {
+                        Swal.fire({
+                            title: 'Info',
+                            text: result.message,
+                            confirmButtonColor: '#f20f0f',
+                            confirmButtonText: 'Okey'
+                        })
+                    }
+
+                });
+
+        }
+    })
+
 }
 
 

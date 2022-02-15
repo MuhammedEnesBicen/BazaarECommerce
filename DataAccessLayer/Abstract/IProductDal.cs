@@ -12,5 +12,8 @@ namespace DataAccessLayer.Abstract
         List<Product> GetListWithProduct(int productId);
         Product GetProductWithJoin(int productId);
         List<Product> GetTopRatedProducts();
+        List<Product> GetMostLovedBooks();
+        List<Product> FilterProducts(string filterText);
+
     }
 }

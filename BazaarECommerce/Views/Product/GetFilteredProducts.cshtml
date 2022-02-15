@@ -1,6 +1,4 @@
-﻿
-
-@model List<EntityLayer.Concrete.Product>
+﻿@model List<EntityLayer.Concrete.Product>
 
 <style>
     .productImgHeight {
@@ -14,12 +12,24 @@
 
 <link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
 <div class="row">
+    @if (Model.Count < 1)
+    {
+    <p class="btn-danger col-12 rounded p-2">There is no Product..</p>
+    }
     @foreach (var item in Model)
     {
         <div class="col-md-4 col-lg-3" href="/Product/GetProductDetail?productId=@item.ProductId">
             <div class="card" style="margin-bottom:2rem;">
                 <div class="text-center rounded " style="height:15rem; background-color:white; ">
-                    <img class="img-fluid" src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
+                    @if (item?.Images?.Count > 0)
+                    {
+                        <img class="img-fluid" src="@item.Images[0].ImagePath" alt="Card image cap" style="max-height:100%; max-width:85%">
+                    }
+                    else
+                    {
+                        <img class="img-fluid" src="/images/imagedefault.png" alt="Card image cap" style="max-height:100%; max-width:85%">
+
+                    }
                 </div>
                 <div class="card-body">
                     @if (item.ProductName.Length > 40)

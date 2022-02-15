@@ -43,7 +43,8 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("AddressId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
 
                     b.ToTable("Addresses");
                 });
@@ -188,12 +189,40 @@ namespace DataAccessLayer.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Clothe", b =>
+                {
+                    b.Property<int>("ClotheId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Gender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ClotheId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("Clothes");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Color", b =>
                 {
                     b.Property<int>("ColorId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ClotheId")
+                        .HasColumnType("int");
 
                     b.Property<string>("ColorName")
                         .HasColumnType("nvarchar(max)");
@@ -203,53 +232,9 @@ namespace DataAccessLayer.Migrations
 
                     b.HasKey("ColorId");
 
+                    b.HasIndex("ClotheId");
+
                     b.ToTable("Colors");
-                });
-
-            modelBuilder.Entity("EntityLayer.Concrete.Computer", b =>
-                {
-                    b.Property<int>("ComputerId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("ColorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DisplayCard")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Memory")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MemoryType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("OperatingSystem")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Processor")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Ram")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ScreenSize")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Webcam")
-                        .HasColumnType("bit");
-
-                    b.HasKey("ComputerId");
-
-                    b.HasIndex("ColorId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Computers");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Customer", b =>
@@ -294,6 +279,47 @@ namespace DataAccessLayer.Migrations
                     b.HasKey("CustomerId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Electronic", b =>
+                {
+                    b.Property<int>("ElectronicId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("DisplayCard")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Memory")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MemoryType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OperatingSystem")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Processor")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Ram")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ScreenSize")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Webcam")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ElectronicId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Electronics");
                 });
 
             modelBuilder.Entity("EntityLayer.Concrete.Image", b =>
@@ -375,10 +401,15 @@ namespace DataAccessLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("ClotheId")
+                        .HasColumnType("int");
+
                     b.Property<string>("SizeName")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("SizeId");
+
+                    b.HasIndex("ClotheId");
 
                     b.ToTable("Sizes");
                 });
@@ -416,8 +447,8 @@ namespace DataAccessLayer.Migrations
             modelBuilder.Entity("EntityLayer.Concrete.Address", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerId")
+                        .WithOne("Address")
+                        .HasForeignKey("EntityLayer.Concrete.Address", "CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -465,21 +496,39 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("EntityLayer.Concrete.Computer", b =>
+            modelBuilder.Entity("EntityLayer.Concrete.Clothe", b =>
                 {
-                    b.HasOne("EntityLayer.Concrete.Color", "Color")
-                        .WithMany()
-                        .HasForeignKey("ColorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("EntityLayer.Concrete.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Color");
+                    b.HasOne("EntityLayer.Concrete.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Size");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Color", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Clothe", null)
+                        .WithMany("Colors")
+                        .HasForeignKey("ClotheId");
+                });
+
+            modelBuilder.Entity("EntityLayer.Concrete.Electronic", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Product");
                 });
@@ -514,6 +563,13 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Size", b =>
+                {
+                    b.HasOne("EntityLayer.Concrete.Clothe", null)
+                        .WithMany("Sizes")
+                        .HasForeignKey("ClotheId");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Stock", b =>
                 {
                     b.HasOne("EntityLayer.Concrete.Color", "Color")
@@ -541,8 +597,17 @@ namespace DataAccessLayer.Migrations
                     b.Navigation("Size");
                 });
 
+            modelBuilder.Entity("EntityLayer.Concrete.Clothe", b =>
+                {
+                    b.Navigation("Colors");
+
+                    b.Navigation("Sizes");
+                });
+
             modelBuilder.Entity("EntityLayer.Concrete.Customer", b =>
                 {
+                    b.Navigation("Address");
+
                     b.Navigation("Cards");
                 });
 

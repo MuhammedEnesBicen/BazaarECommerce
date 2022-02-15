@@ -1,5 +1,4 @@
 ﻿using BussinessLayer.Concrete;
-using DataAccessLayer.Abstract;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using Microsoft.AspNetCore.Http;
@@ -13,46 +12,44 @@ namespace BazaarECommerce.Controllers
 {
     public class LoginController : Controller
     {
+        static bool rememberMe=false;
+        static Customer customer; // if user had wanted be remembered, this object will be initialized
         CustomerManager cm = new CustomerManager(new EfCustomerRepository());
         public IActionResult Index()
         {
-            //String a = HttpContext.Session.GetString("customerId");
-            String b = Request.Cookies["customerId"]; //currenty any cookie didn't saved
-            if (b != null)
+            
+            String mail = Request.Cookies["customerMail"];
+            String password = Request.Cookies["customerPassword"];
+            if (mail != null && password != null)
             {
-                Customer temp = cm.GetById(Int32.Parse(b));
-                return View(temp);
+                rememberMe = true;
+                ViewBag.rememberMe = rememberMe;
+                customer = new Customer { Email = mail, Password = password };
+                return View(customer);
             }
+
+            ViewBag.rememberMe = rememberMe;
             return View();
         }
 
         [HttpPost]
-        public IActionResult Index(Customer c, bool rememberMe)
+        public IActionResult Index(Customer c)
         {
-            ViewBag.message = "";
-
+            ViewBag.rememberMe = rememberMe;
             var temp = cm.GetByEmail(c.Email);
-            if (temp == null)
-            {
-                ViewBag.message = "There is no such an email in our db.";
-            }
+            if (temp == null) ViewBag.message = "There is no such an email in our db.";
             else
             {
-
                 if (temp.Password == c.Password)
                 {
-                    //CookieOptions cookie = new CookieOptions();
-                    //cookie.Expires = DateTime.Now.AddYears(10);
-                    //Response.Cookies.Append("customerId", temp.CustomerId.ToString(), cookie);
+                    if (rememberMe && customer == null) CookieOperations("save", c.Email.ToString(), c.Password.ToString());
+                    if (!rememberMe && customer != null) CookieOperations("delete", "", "");
+
                     HttpContext.Session.SetString("customerId", temp.CustomerId.ToString());
                     ViewBag.message = "true";
                     return RedirectToAction("Index", "Home");
                 }
-                else
-                {
-                    ViewBag.message = "Password is wrong!";
-                }
-
+                else ViewBag.message = "Password is wrong!";
             }
             return View();
         }
@@ -67,7 +64,6 @@ namespace BazaarECommerce.Controllers
             }
             else
             {
-
                 if (temp.Password == password)
                 {
                     return true;
@@ -76,7 +72,33 @@ namespace BazaarECommerce.Controllers
                 {
                     return false;
                 }
+            }
+        }
 
+
+        [HttpPost]
+        public void ChangeRememberMeOption(bool value)
+        {
+            rememberMe = value;
+        }
+
+
+        public void CookieOperations(string job, string email, string password)
+        {
+            switch (job)
+            {
+                case "save":
+                    CookieOptions cookie = new CookieOptions();
+                    cookie.Expires = DateTime.Now.AddMonths(2);
+                    Response.Cookies.Append("customerMail", email, cookie);
+                    Response.Cookies.Append("customerPassword", password, cookie);
+                    break;
+                case "delete":
+                    Response.Cookies.Delete("customerMail");
+                    Response.Cookies.Delete("customerPassword");
+                    break;
+                default:
+                    break;
             }
         }
     }

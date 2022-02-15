@@ -14,20 +14,18 @@ namespace BazaarECommerce.Controllers
     public class ProductController : Controller
     {
         private ProductManager _pm = new ProductManager(new EfProductRepository());
-        private ComputerManager _cm = new ComputerManager(new EfComputerRepository());
+        private ElectronicManager _cm = new ElectronicManager(new EfElectronicRepository());
         private BookManager _bm = new BookManager(new EfBookRepository());
-        FilterModel filterModel;
+        static FilterModel filterModel;
+        static List<Product> products;
 
-        public ProductController()
-        {
-            filterModel = new FilterModel { BrandIds = new List<int>(), StarRates = new List<int>() };
-        }
 
         public IActionResult Index(int categoryId)
         {
             ViewBag.category = categoryId;
-            ViewData["filterModel"] = new FilterModel { BrandIds=new List<int>(), StarRates= new List<int>()};
+            filterModel = new FilterModel { BrandIds = new List<int>(), StarRates = new List<int>(),Searchtext="",MinPrice=0 };
             var list = _pm.GetByCategory(categoryId);
+            products = list;
             return View(list);
         }
 
@@ -58,19 +56,78 @@ namespace BazaarECommerce.Controllers
             return View(product);
         }
 
-        public PartialViewResult GetFilteredProducts(int categoryId,int brandId)
+        [HttpPost]
+        public void BrandFilter(int brandId)
         {
             if (filterModel.BrandIds.Contains(brandId)) filterModel.BrandIds.Remove(brandId);
             else filterModel.BrandIds.Add(brandId);
+        }
+
+        [HttpPost]
+        public void StarFilter(int starRate)
+        {
+            if (filterModel.StarRates.Contains(starRate)) filterModel.StarRates.Remove(starRate);
+            else filterModel.StarRates.Add(starRate);
+        }
+
+        [HttpPost]
+        public void TextFilter(string text)
+        {
+            filterModel.Searchtext = text;
+        }
+        [HttpPost]
+        public void PriceFilter(int min, int max)
+        {
+            filterModel.MinPrice = min;
+            filterModel.MaxPrice = max;
+
+        }
+
+        [HttpPost]
+        public PartialViewResult GetFilteredProducts()
+        {
+            List<Product> list= products;
+            if (!String.IsNullOrEmpty(filterModel.Searchtext))
+            {
+                list = list.Where(p => p.ProductName.ToLower().Contains(filterModel.Searchtext.ToLower())).ToList();
+            }
+            if (filterModel.MinPrice != 0)
+            {
+                list = list.Where(p => p.Price-p.Discount >= filterModel.MinPrice).ToList();
+            }
+            if (filterModel.MaxPrice != 0)
+            {
+                list = list.Where(p => p.Price - p.Discount <= filterModel.MaxPrice).ToList();
+            }
+            if (filterModel.BrandIds.Count>0)
+                list = list.Where(p => filterModel.BrandIds.Contains(p.BrandId)).ToList();
+            if (filterModel.StarRates.Count > 0)
+            {
+                var tempList = new List<Product>();
+                foreach (var rate in filterModel.StarRates)
+                {
+                    switch (rate)
+                    {
+                        case 0:
+                            tempList = tempList.Concat(list.Where(p=>(p.StarRate>=0 && p.StarRate<2)).ToList()).ToList();
+                            break;
+                        case 2:
+                            tempList = tempList.Concat(list.Where(p => (p.StarRate >= 2 && p.StarRate < 3)).ToList()).ToList();
+                            break;
+                        case 3:
+                            tempList = tempList.Concat(list.Where(p => (p.StarRate >= 3 && p.StarRate < 4)).ToList()).ToList();
+                            break;
+                        case 4:
+                            tempList = tempList.Concat(list.Where(p => (p.StarRate >= 4 && p.StarRate <= 5)).ToList()).ToList();
+                            break;
+                    }
+                }
+                list = tempList;
+            }
 
 
-            var products = _pm.GetByCategory(categoryId);
-            //var a = products.Where(p => p.BrandId ==brandId).ToList();
-            var a = products.Where(p => filterModel.BrandIds.Contains(p.BrandId)).ToList();
 
-
-
-            return PartialView(a);
+            return PartialView(list);
         }
 
 
