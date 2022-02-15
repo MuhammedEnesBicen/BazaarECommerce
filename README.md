@@ -23,3 +23,6 @@ Aşağıda projenin birkaç görüntüsü bulunmaktadır.
 ![]() <br />
 
 
+not: projede admin bölümüne ulaşabilmek için url'i localhost kısmından sonra admin olacak şekilde ayarlayın
+
+
